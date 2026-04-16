@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>تقديم وزارة الداخلية - دريفت تايم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --navy: #07102a;
+      --navy2: #0d1c3f;
+      --gold: #c9a227;
+      --gold2: #e5b93a;
+      --white: #f0f4ff;
+      --muted: #8899bb;
+      --green: #2ecc71;
+      --red: #e74c3c;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== STARS CANVAS ===== */
+    #stars-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== WELCOME PAGE ===== */
+    #welcome-page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.2rem;
+      gap: 1.6rem;
+    }
+
+    .logo-ring {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 30px rgba(201,162,39,0.4), 0 0 80px rgba(201,162,39,0.15);
+      overflow: hidden;
+      animation: pulse-ring 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 30px rgba(201,162,39,0.4), 0 0 80px rgba(201,162,39,0.15); }
+      50% { box-shadow: 0 0 50px rgba(201,162,39,0.7), 0 0 120px rgba(201,162,39,0.3); }
+    }
+
+    .divider-gold {
+      width: 80px; height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    .welcome-subtitle {
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .welcome-title {
+      font-size: clamp(1.5rem, 6vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.55;
+      text-shadow: 0 2px 20px rgba(201,162,39,0.3);
+    }
+
+    .welcome-title span { color: var(--gold); }
+
+    .welcome-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 480px;
+      line-height: 1.85;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 25px rgba(201,162,39,0.4);
+      min-height: 54px;
+      min-width: 200px;
+    }
+
+    .btn-primary:active { transform: scale(0.97); }
+
+    .stars-row { color: var(--gold); font-size: 1.2rem; letter-spacing: 8px; }
+
+    /* ===== FORM PAGE ===== */
+    #form-page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 0 0 5rem;
+    }
+
+    .form-header {
+      text-align: center;
+      padding: 1.8rem 1rem 1.5rem;
+      border-bottom: 1px solid rgba(201,162,39,0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-logo {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+      margin: 0 auto 0.8rem;
+    }
+
+    .form-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+    .form-title { font-size: 1.5rem; font-weight: 900; color: var(--gold); }
+    .form-subtitle { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
+
+    .form-container { max-width: 680px; margin: 0 auto; padding: 0 1rem; }
+
+    .form-card {
+      background: rgba(13,28,63,0.85);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: 16px;
+      padding: 1.4rem 1.2rem;
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .field-group { margin-bottom: 1.4rem; }
+    .field-group:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .field-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      color: var(--navy);
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 900;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      background: rgba(7,16,42,0.9);
+      border: 1px solid rgba(201,162,39,0.3);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      color: var(--white);
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      direction: rtl;
+      -webkit-appearance: none;
+      min-height: 50px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+
+    .bool-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+    .bool-option { position: relative; }
+    .bool-option input[type="radio"] { display: none; }
+
+    .bool-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0.9rem 0.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(201,162,39,0.3);
+      background: rgba(7,16,42,0.8);
+      cursor: pointer;
+      color: var(--white);
+      font-size: 0.88rem;
+      transition: all 0.25s;
+      text-align: center;
+      min-height: 52px;
+      margin-bottom: 0;
+    }
+
+    .bool-option input[type="radio"]:checked + label {
+      border-color: var(--gold);
+      background: rgba(201,162,39,0.15);
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .bool-option.yes input[type="radio"]:checked + label { border-color: var(--green); background: rgba(46,204,113,0.1); color: var(--green); }
+    .bool-option.no input[type="radio"]:checked + label { border-color: var(--red); background: rgba(231,76,60,0.1); color: var(--red); }
+
+    .pledge-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(201,162,39,0.07);
+      border: 1px solid rgba(201,162,39,0.3);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      cursor: pointer;
+    }
+
+    .pledge-box input[type="checkbox"] {
+      width: 24px; height: 24px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pledge-text { color: var(--white); font-size: 0.92rem; line-height: 1.75; }
+    .pledge-text strong { color: var(--gold); }
+
+    .submit-section { text-align: center; margin-top: 1.5rem; padding: 0 0.5rem; }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border: none;
+      padding: 1.1rem 2rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 25px rgba(201,162,39,0.4);
+      width: 100%;
+      max-width: 420px;
+      min-height: 56px;
+    }
+
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ===== SUCCESS PAGE ===== */
+    #success-page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .success-icon {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(46,204,113,0.15);
+      border: 3px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 40px rgba(46,204,113,0.3);
+    }
+
+    @keyframes pop-in {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title { font-size: 1.8rem; font-weight: 900; color: var(--green); }
+    .success-msg { color: var(--muted); max-width: 420px; line-height: 1.85; font-size: 0.97rem; }
+
+    .btn-back {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-height: 52px;
+    }
+
+    .btn-back:active { background: rgba(201,162,39,0.1); }
+
+    .error-msg {
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      display: none;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 480px) {
+      .logo-ring { width: 130px; height: 130px; }
+      .welcome-title { font-size: 1.45rem; }
+      .bool-group { grid-template-columns: 1fr; }
+      .form-card { padding: 1.1rem; }
+      .form-container { padding: 0 0.75rem; }
+      .form-title { font-size: 1.3rem; }
+      .btn-primary { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- ====== WELCOME PAGE ====== -->
+<div id="welcome-page">
+  <div class="logo-ring">
+    <img src="logo.png" alt="Drift Time" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1c3f,#c9a227)'" />
+  </div>
+
+  <div class="stars-row">★ ★ ★</div>
+
+  <div>
+    <p class="welcome-subtitle">DRIFT TIME RP</p>
+    <div class="divider-gold" style="margin: 0.8rem auto;"></div>
+    <h1 class="welcome-title">
+      أهلاً وسهلاً بك في<br />
+      <span>تقديم وزارة الداخلية</span><br />
+      لدولة دريفت تايم
+    </h1>
+  </div>
+
+  <p class="welcome-desc">
+    يسعدنا انضمامك إلى صفوف وزارة الداخلية. يرجى تعبئة النموذج بدقة وصدق.
+    سيتم مراجعة طلبك من قبل الإدارة والرد عليك في أقرب وقت.
+  </p>
+
+  <div class="divider-gold"></div>
+  <button class="btn-primary" onclick="showForm()">تقديم الآن</button>
+  <div class="stars-row" style="opacity:0.4;">★ ★ ★</div>
+</div>
+
+<!-- ====== FORM PAGE ====== -->
+<div id="form-page">
+  <div class="form-header">
+    <div class="form-logo">
+      <img src="logo.png" alt="Drift Time" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1c3f,#c9a227)'" />
+    </div>
+    <h1 class="form-title">نموذج تقديم وزارة الداخلية</h1>
+    <p class="form-subtitle">دولة دريفت تايم | DRIFT TIME RP</p>
+  </div>
+
+  <div class="form-container">
+    <form id="apply-form" onsubmit="submitForm(event)">
+
+      <div class="form-card">
+        <div class="field-group">
+          <label><span class="field-num">1</span> حسابك ديس (Discord)</label>
+          <input type="text" id="f-discord" placeholder="مثال: username#0000" autocomplete="off" required />
+        </div>
+        <div class="field-group">
+          <label><span class="field-num">2</span> اسمك الكامل</label>
+          <input type="text" id="f-name" placeholder="اكتب اسمك" autocomplete="off" required />
+        </div>
+        <div class="field-group">
+          <label><span class="field-num">3</span> عمرك</label>
+          <input type="number" id="f-age" placeholder="عمرك بالسنوات" inputmode="numeric" min="10" max="99" required />
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="field-group">
+          <label><span class="field-num">4</span> طولك (سم)</label>
+          <input type="number" id="f-height" placeholder="الطول بالسنتيمتر" inputmode="numeric" min="100" max="250" required />
+        </div>
+        <div class="field-group">
+          <label><span class="field-num">5</span> وزنك (كغ)</label>
+          <input type="number" id="f-weight" placeholder="الوزن بالكيلوغرام" inputmode="numeric" min="30" max="300" required />
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="field-group">
+          <label><span class="field-num">6</span> ماذا تعرف عن العسكرية؟</label>
+          <textarea id="f-military" placeholder="اكتب ما تعرفه عن الشؤون العسكرية والأمنية..." required></textarea>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="field-group">
+          <label><span class="field-num">7</span> القوة البدنية ممتازة</label>
+          <div class="bool-group">
+            <div class="bool-option yes">
+              <input type="radio" name="physical" id="phy-yes" value="yes" required />
+              <label for="phy-yes">✓ نعم ممتازة</label>
+            </div>
+            <div class="bool-option no">
+              <input type="radio" name="physical" id="phy-no" value="no" />
+              <label for="phy-no">✗ ليست ممتازة</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label><span class="field-num">8</span> هل يوجد لديك مشكلة صحية؟</label>
+          <div class="bool-group">
+            <div class="bool-option yes">
+              <input type="radio" name="health" id="health-yes" value="yes" required />
+              <label for="health-yes">✓ يوجد مشكلة</label>
+            </div>
+            <div class="bool-option no">
+              <input type="radio" name="health" id="health-no" value="no" />
+              <label for="health-no">✗ لا توجد مشكلة</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="field-group">
+          <label><span class="field-num">9</span> القطاع الذي تفضله وخبراتك فيه</label>
+          <textarea id="f-sector" placeholder="اذكر القطاع الذي تفضل العمل فيه وما خبراتك السابقة..." required></textarea>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <label style="margin-bottom: 1rem;"><span class="field-num">10</span> التعهد والولاء</label>
+        <label class="pledge-box" for="f-pledge">
+          <input type="checkbox" id="f-pledge" required />
+          <span class="pledge-text">
+            أتعهد <strong>بعدم خيانة وزارة الداخلية</strong> لدولة دريفت تايم تحت أي ظرف كان، والتزامي التام بقوانين ولوائح الوزارة.
+          </span>
+        </label>
+      </div>
+
+      <div class="submit-section">
+        <p class="error-msg" id="form-error">يرجى تعبئة جميع الحقول المطلوبة</p>
+        <button type="submit" class="btn-submit" id="submit-btn">تقديم الطلب</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- ====== SUCCESS PAGE ====== -->
+<div id="success-page">
+  <div class="success-icon">✓</div>
+  <div class="stars-row">★ ★ ★</div>
+  <h2 class="success-title">تم إرسال الطلب بنجاح</h2>
+  <p class="success-msg">
+    شكراً لتقديمك في وزارة الداخلية لدولة دريفت تايم.<br />
+    سيتم مراجعة طلبك من قبل الإدارة والرد عليك في أقرب وقت ممكن.
+  </p>
+  <div class="divider-gold"></div>
+  <button class="btn-back" onclick="showWelcome()">العودة للصفحة الرئيسية</button>
+</div>
+
+<script>
+  const API_URL = "";
+
+  // ===== STARS =====
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < 100; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.3,
+        alpha: Math.random(),
+        speed: Math.random() * 0.005 + 0.002,
+        dir: Math.random() > 0.5 ? 1 : -1
+      });
+    }
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.alpha += s.speed * s.dir;
+      if (s.alpha > 1 || s.alpha < 0.1) s.dir *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201, 162, 39, ${s.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  window.addEventListener('resize', () => { resizeCanvas(); createStars(); });
+  resizeCanvas();
+  createStars();
+  drawStars();
+
+  // ===== NAVIGATION =====
+  function showForm() {
+    document.getElementById('welcome-page').style.display = 'none';
+    document.getElementById('form-page').style.display = 'block';
+    document.getElementById('success-page').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  function showWelcome() {
+    document.getElementById('welcome-page').style.display = 'flex';
+    document.getElementById('form-page').style.display = 'none';
+    document.getElementById('success-page').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  function showSuccess() {
+    document.getElementById('welcome-page').style.display = 'none';
+    document.getElementById('form-page').style.display = 'none';
+    document.getElementById('success-page').style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
+
+  document.getElementById('welcome-page').style.display = 'flex';
+
+  // ===== SUBMIT =====
+  async function submitForm(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const errorEl = document.getElementById('form-error');
+    errorEl.style.display = 'none';
+
+    const discord = document.getElementById('f-discord').value.trim();
+    const name = document.getElementById('f-name').value.trim();
+    const age = parseInt(document.getElementById('f-age').value);
+    const height = parseInt(document.getElementById('f-height').value);
+    const weight = parseInt(document.getElementById('f-weight').value);
+    const military = document.getElementById('f-military').value.trim();
+    const physical = document.querySelector('input[name="physical"]:checked');
+    const health = document.querySelector('input[name="health"]:checked');
+    const sector = document.getElementById('f-sector').value.trim();
+    const pledge = document.getElementById('f-pledge').checked;
+
+    if (!discord || !name || !age || !height || !weight || !military || !physical || !health || !sector || !pledge) {
+      errorEl.style.display = 'block';
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const application = {
+      id: Date.now(),
+      discordAccount: discord,
+      fullName: name,
+      age,
+      height,
+      weight,
+      militaryKnowledge: military,
+      physicalFitness: physical.value === 'yes',
+      healthIssues: health.value === 'yes',
+      preferredSector: sector,
+      sectorExperience: sector,
+      pledgesLoyalty: pledge,
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'جاري الإرسال...';
+
+    try {
+      if (API_URL) {
+        const res = await fetch(API_URL + '/api/applications', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(application)
+        });
+        if (!res.ok) throw new Error('Server error');
+      } else {
+        const existing = JSON.parse(localStorage.getItem('dt_applications') || '[]');
+        existing.push(application);
+        localStorage.setItem('dt_applications', JSON.stringify(existing));
+      }
+      showSuccess();
+    } catch (err) {
+      const existing = JSON.parse(localStorage.getItem('dt_applications') || '[]');
+      existing.push(application);
+      localStorage.setItem('dt_applications', JSON.stringify(existing));
+      showSuccess();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'تقديم الطلب';
+    }
+  }
+</script>
+</body>
+</html>
